@@ -32,8 +32,8 @@ main {
   align-items: center;
   justify-content: space-around;
 }
-
-.left {
+/*. is for a class and # for an ID*/
+.left { 
   width: 52rem;
   display: flex;
   flex-direction: column;
@@ -108,12 +108,18 @@ h1 {
 .btn:hover {
   background-color: #ccc;
 }
-
+.btn:active {
+  background-color: rgb(190, 26, 26);
+}
 .message {
   margin-bottom: 8rem;
   height: 3rem;
 }
 
 .label-score {
+  margin-bottom: 2rem;
+}
+
+.label-highscore {
   margin-bottom: 2rem;
 }
