@@ -4,6 +4,8 @@
 const score0El = document.getElementById('score--0');
 const score1El = document.getElementById('score--1');
 const btnRollDice = document.getElementById('roll-dice');
+const btnHold = document.getElementById('hold');
+const btnNewGame = document.getElementById('btn-newgame');
 const diceEl = document.getElementById('dice');
 const player0 = document.querySelector('.player--0');
 const player1 = document.querySelector('.player--1');
@@ -14,6 +16,8 @@ const currentscore1 = document.getElementById('current--1');
 // Initiating variables
 let diceNumber = 0;
 let score = 0;
+let activePlayer = 0;
+const scores = [0, 0];
 
 
 score0El.textContent = 0;
@@ -28,19 +32,49 @@ const rollDice = () => {
     updateCurrentScore();
 }
 
-btnRollDice.addEventListener('click', rollDice);
+// Function to hold
+const hold = () => {
+    scores[`${activePlayer}`] += score;
+    document.getElementById(`score--${activePlayer}`).textContent = scores[`${activePlayer}`];
+    switchPlayer();
+}
+// Function to switch player
+const switchPlayer = () => {
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    console.log(activePlayer)
+    player0.classList.toggle('player--active');
+    player1.classList.toggle('player--active');
+}
+
+// Function to start new game
+const newGame = () => {
+    diceNumber = 0;
+    score = 0;
+    activePlayer = 0;
+    scores[0] = 0;
+    scores[1] = 0;
+    diceEl.classList.add('hidden');
+    score0El.textContent = 0;
+    score1El.textContent = 0;
+    currentscore1.textContent = 0;
+    currentscore0.textContent = 0;
+}
 
 //Check for dice===1
 const updateCurrentScore = () => {
     if (diceNumber !== 1) {
-        console.log(diceNumber);
-        score += diceNumber;
         // Add dice to the current score
-        if (player0.classList.contains('player--active')) {
-            currentscore0.textContent = score;
-        }
+        score += diceNumber;
+        document.getElementById(`current--${activePlayer}`).textContent = score;
     } else {
-        score = 0;
         // Switch to next player
+        score = 0;
+        document.getElementById(`current--${activePlayer}`).textContent = score;
+        switchPlayer();
+
     }
 }
+
+btnRollDice.addEventListener('click', rollDice);
+btnHold.addEventListener('click', hold);
+btnNewGame.addEventListener('click', newGame);
