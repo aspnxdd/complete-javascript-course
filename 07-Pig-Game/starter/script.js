@@ -35,7 +35,9 @@ const rollDice = () => {
 // Function to hold
 const hold = () => {
     scores[`${activePlayer}`] += score;
+    if (scores[`${activePlayer}`] >= 100) win();
     document.getElementById(`score--${activePlayer}`).textContent = scores[`${activePlayer}`];
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
     switchPlayer();
 }
 // Function to switch player
@@ -58,6 +60,13 @@ const newGame = () => {
     score1El.textContent = 0;
     currentscore1.textContent = 0;
     currentscore0.textContent = 0;
+    player0.classList.add('player--active');
+    player1.classList.remove('player--active');
+}
+
+const win = () => {
+    alert(`Player ${activePlayer+1} has won!`)
+    newGame();
 }
 
 //Check for dice===1
@@ -65,6 +74,7 @@ const updateCurrentScore = () => {
     if (diceNumber !== 1) {
         // Add dice to the current score
         score += diceNumber;
+        if (score >= 100) win();
         document.getElementById(`current--${activePlayer}`).textContent = score;
     } else {
         // Switch to next player
